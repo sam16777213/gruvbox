@@ -1,3 +1,5 @@
+
+
 " -----------------------------------------------------------------------------
 " File: gruvbox.vim
 " Description: Retro groove color scheme for Vim
@@ -30,7 +32,7 @@ if !exists('g:gruvbox_bold')
 endif
 if !exists('g:gruvbox_italic')
   if has('gui_running') || $TERM_ITALICS == 'true'
-    let g:gruvbox_italic=1
+    let g:gruvbox_italic=0
   else
     let g:gruvbox_italic=0
   endif
@@ -109,10 +111,12 @@ let s:gb.light4_256  = ['#a89984', 246]     " 168-153-132
 
 let s:gb.bright_red     = ['#fb4934', 167]     " 251-73-52
 let s:gb.bright_green   = ['#b8bb26', 142]     " 184-187-38
-let s:gb.bright_yellow  = ['#fabd2f', 214]     " 250-189-47
-let s:gb.bright_blue    = ['#83a598', 109]     " 131-165-152
+let s:gb.bright_yellow  = ['#f8b249', 214]     " 250-189-47
+"let s:gb.bright_blue    = ['#83a598', 109]     " 131-165-152
+
 let s:gb.bright_purple  = ['#d3869b', 175]     " 211-134-155
 let s:gb.bright_aqua    = ['#8ec07c', 108]     " 142-192-124
+let s:gb.bright_blue    = ['#AFE1E4',116]     " 142-192-124
 let s:gb.bright_orange  = ['#fe8019', 208]     " 254-128-25
 
 let s:gb.neutral_red    = ['#cc241d', 124]     " 204-36-29
@@ -267,7 +271,7 @@ let s:gb.blue   = s:blue
 let s:gb.purple = s:purple
 let s:gb.aqua   = s:aqua
 let s:gb.orange = s:orange
-
+let s:specialPurple = ['#ab9df2',147]
 " }}}
 " Setup Terminal Colors For Neovim: {{{
 
@@ -443,10 +447,13 @@ call s:HL('GruvboxBlue', s:blue)
 call s:HL('GruvboxBlueBold', s:blue, s:none, s:bold)
 call s:HL('GruvboxPurple', s:purple)
 call s:HL('GruvboxPurpleBold', s:purple, s:none, s:bold)
+call s:HL('GruvboxSpecialPurple', s:specialPurple)
+call s:HL('GruvboxSpecialPurpleBold', s:specialPurple, s:none, s:bold)
 call s:HL('GruvboxAqua', s:aqua)
 call s:HL('GruvboxAquaBold', s:aqua, s:none, s:bold)
 call s:HL('GruvboxOrange', s:orange)
 call s:HL('GruvboxOrangeBold', s:orange, s:none, s:bold)
+
 
 call s:HL('GruvboxRedSign', s:red, s:sign_column, s:invert_signs)
 call s:HL('GruvboxGreenSign', s:green, s:sign_column, s:invert_signs)
@@ -587,14 +594,14 @@ hi! link Label GruvboxRed
 " try, catch, throw
 hi! link Exception GruvboxRed
 " sizeof, "+", "*", etc.
-hi! link Operator Normal
+hi! link Operator GruvboxYellowBold
 " Any other keyword
 hi! link Keyword GruvboxRed
 
 " Variable name
 hi! link Identifier GruvboxBlue
 " Function name
-hi! link Function GruvboxGreenBold
+hi! link Function GruvboxBlue
 
 " Generic preprocessor
 hi! link PreProc GruvboxAqua
@@ -625,7 +632,7 @@ hi! link Number GruvboxPurple
 hi! link Float GruvboxPurple
 
 " Generic type
-hi! link Type GruvboxYellow
+hi! link Type GruvboxSpecialPurple
 " static, register, volatile, etc
 hi! link StorageClass GruvboxOrange
 " struct, union, enum, etc.
@@ -638,9 +645,9 @@ hi! link Typedef GruvboxYellow
 
 if version >= 700
   " Popup menu: normal item
-  call s:HL('Pmenu', s:fg1, s:bg2)
+  call s:HL('Pmenu', s:fg2, s:bg1)
   " Popup menu: selected item
-  call s:HL('PmenuSel', s:bg2, s:blue, s:bold)
+  call s:HL('PmenuSel', s:bg0, s:aqua)
   " Popup menu: scrollbar
   call s:HL('PmenuSbar', s:none, s:bg2)
   " Popup menu: scrollbar thumb
@@ -998,18 +1005,18 @@ hi! link clojureUnquote GruvboxYellow
 " }}}
 " C: {{{
 
-hi! link cOperator GruvboxPurple
+hi! link cOperator GruvboxYellowBold
 hi! link cStructure GruvboxOrange
 
 " }}}
 " Python: {{{
 
-hi! link pythonBuiltin GruvboxOrange
+hi! link pythonBuiltin GruvboxBlue
 hi! link pythonBuiltinObj GruvboxOrange
-hi! link pythonBuiltinFunc GruvboxOrange
+hi! link pythonBuiltinFunc GruvboxBlue
 hi! link pythonFunction GruvboxAqua
-hi! link pythonDecorator GruvboxRed
-hi! link pythonInclude GruvboxBlue
+hi! link pythonDecorator GruvboxOrange
+hi! link pythonInclude GruvboxAqua
 hi! link pythonImport GruvboxBlue
 hi! link pythonRun GruvboxBlue
 hi! link pythonCoding GruvboxBlue
@@ -1017,10 +1024,10 @@ hi! link pythonOperator GruvboxRed
 hi! link pythonException GruvboxRed
 hi! link pythonExceptions GruvboxPurple
 hi! link pythonBoolean GruvboxPurple
-hi! link pythonDot GruvboxFg3
-hi! link pythonConditional GruvboxRed
+hi! link pythonDot GruvboxYellowBold
+hi! link pythonConditional GruvboxOrange
 hi! link pythonRepeat GruvboxRed
-hi! link pythonDottedName GruvboxGreenBold
+hi! link pythonDottedName GruvboxYellow
 
 " }}}
 " CSS: {{{
@@ -1146,8 +1153,8 @@ hi! link javascriptDOMNodeMethod GruvboxFg1
 hi! link javascriptDOMStorageMethod GruvboxFg1
 hi! link javascriptHeadersMethod GruvboxFg1
 
-hi! link javascriptAsyncFuncKeyword GruvboxRed
-hi! link javascriptAwaitFuncKeyword GruvboxRed
+hi! link javascriptAsyncFuncKeyword GruvboxAqua
+hi! link javascriptAwaitFuncKeyword GruvboxAqua
 
 " }}}
 " PanglossJS: {{{
